@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anagram App by Bhoomi Singh</title>
+    <style>
+        * {
+            font-size: 40px;
+            font-family: Calibri;
+        }
+        body {
+            background: linear-gradient(to bottom, #800080, #d8bfd8);
+            color: white;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #800080;
+            border-radius: 5px;
+            font-size: 30px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #800080;
+            color: white;
+            cursor: pointer;
+            font-size: 30px;
+        }
+        input[type="submit"]:hover {
+            background-color: #4b0082;
+        }
+        h2 {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Anagram App by Bhoomi Singh</h1>
+    <form onSubmit="show(event)">
+        <input type="text" id="word1" placeholder="Enter first word" />
+        <input type="text" id="word2" placeholder="Enter second word" />
+        <input type="submit" value="Check Anagram">
+    </form>
+    <h2 id="msg"></h2>
+    <script>
+        function show(event) {
+            event.preventDefault();
+            let word1 = document.getElementById("word1");
+            let word2 = document.getElementById("word2");
+            let msg = document.getElementById("msg");
+
+            if (word1.value === "" || word2.value === "") {
+                alert("Both fields are required");
+                msg.innerHTML = "";
+                if (word1.value === "") word1.focus();
+                else word2.focus();
+                return;
+            }
+
+            if (word1.value.trim() === "" || word2.value.trim() === "") {
+                alert("Fields should not be blank spaces");
+                msg.innerHTML = "";
+                if (word1.value.trim() === "") word1.value = "";
+                else word2.value = "";
+                if (word1.value.trim() === "") word1.focus();
+                else word2.focus();
+                return;
+            }
+
+            if (!word1.value.match(/^[A-Za-z]+$/) || !word2.value.match(/^[A-Za-z]+$/)) {
+                alert("Words should contain only alphabets");
+                msg.innerHTML = "";
+                if (!word1.value.match(/^[A-Za-z]+$/)) word1.value = "";
+                else word2.value = "";
+                if (!word1.value.match(/^[A-Za-z]+$/)) word1.focus();
+                else word2.focus();
+                return;
+            }
+
+            let sortedWord1 = word1.value.toLowerCase().split("").sort().join("");
+            let sortedWord2 = word2.value.toLowerCase().split("").sort().join("");
+
+            if (sortedWord1 === sortedWord2) {
+                msg.innerHTML = `"${word1.value}" and "${word2.value}" are anagrams!`;
+            } else {
+                msg.innerHTML = `"${word1.value}" and "${word2.value}" are not anagrams.`;
+            }
+        }
+    </script>
+</body>
+</html>
